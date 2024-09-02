@@ -1,3 +1,5 @@
+/* QUESTION 3 595. Big Countries
+
 Table: World
 
 +-------------+---------+
@@ -23,8 +25,6 @@ Return the result table in any order.
 
 The result format is in the following example.
 
- 
-
 Example 1:
 
 Input: 
@@ -44,4 +44,10 @@ Output:
 +-------------+------------+---------+
 | Afghanistan | 25500100   | 652230  |
 | Algeria     | 37100000   | 2381741 |
-+-------------+------------+---------+
++-------------+------------+---------+ */
+
+/* Write your T-SQL query statement below */
+SELECT name, population, area
+FROM World 
+WHERE area > 3000000
+OR population > 25000000;
