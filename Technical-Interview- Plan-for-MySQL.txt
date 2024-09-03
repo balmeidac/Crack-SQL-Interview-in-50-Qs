@@ -105,6 +105,17 @@ INSERT INTO Shippers VALUES (3, 'UPS', '555-555-5555');
   - `ShipperName`
   - `OrderDate`
 
+- **Answer:**
+SELECT orderid, customername, shippername, orderdate
+FROM orders
+
+/* Joining orders and customers tables*/
+INNER JOIN customers						
+ON orders.customerid = customers.customerid
+
+/* Joining orders and shippers tables*/											
+INNER JOIN shippers							
+ON orders.shipperid = shippers.shipperid
 
 
 #### *3. Aggregation (5 minutes)*
@@ -112,6 +123,21 @@ INSERT INTO Shippers VALUES (3, 'UPS', '555-555-5555');
 - *Expected Output:*
   - CustomerName
   - TotalOrders
+
+- **Answer:**
+SELECT customers.customername,
+
+/* Count the total number of orders*/
+COUNT(orders.orderid) AS TotalOrders
+
+FROM customers
+
+/* Joining orders and customers tables*/
+INNER JOIN orders
+ON customers.customerid = orders.customerid
+
+/* Group by each customer*/
+GROUP BY customers.customername
 
 
 #### **4. Filtering and Grouping (5 minutes)**
