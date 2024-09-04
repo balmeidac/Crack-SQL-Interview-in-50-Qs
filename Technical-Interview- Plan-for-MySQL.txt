@@ -89,12 +89,21 @@ INSERT INTO Shippers VALUES (3, 'UPS', '555-555-5555');
 
 ### Interview Questions
 
-#### *1. Basic Query (5 minutes)*
-- *Question:* Retrieve a list of all customers in the USA.
-- *Expected Output:*
-  - CustomerID
-  - CustomerName
-  - ContactName
+--#### *1. Basic Query (5 minutes)*
+--- *Question:* Retrieve a list of all customers in the USA.
+--- *Expected Output:*
+--  - CustomerID
+--  - CustomerName
+--  - ContactName
+
+-- Select the columns CustomerID, CustomerName, and ContactName from the Customers table
+SELECT CustomerID, CustomerName, ContactName
+
+-- Specify that the data should be retrieved from the Customers table
+FROM Customers
+
+-- Filter the results to include only rows where the Country is 'USA'
+WHERE Country = 'USA';
 
 
 #### **2. Joining Tables (5 minutes)**
@@ -106,16 +115,21 @@ INSERT INTO Shippers VALUES (3, 'UPS', '555-555-5555');
   - `OrderDate`
 
 - **Answer:**
-SELECT orderid, customername, shippername, orderdate
-FROM orders
+-- Select the columns OrderID, CustomerName, Shippername, and OrderDate from the combined result set
+SELECT OrderID, CustomerName, Shippername, OrderDate
 
-/* Joining orders and customers tables*/
-INNER JOIN customers						
-ON orders.customerid = customers.customerid
+-- Specify that the base table to query from is the Orders table
+FROM Orders
 
-/* Joining orders and shippers tables*/											
-INNER JOIN shippers							
-ON orders.shipperid = shippers.shipperid
+-- Perform an INNER JOIN between the Orders table and the Customers table
+-- This will combine rows from both tables where the CustomerID matches in both tables
+INNER JOIN Customers						
+ON Orders.CustomerID = Customers.CustomerID
+
+-- Perform another INNER JOIN, this time between the Orders table and the Shippers table
+-- This will combine rows from both tables where the ShipperID matches in both tables
+INNER JOIN Shippers							
+ON Orders.ShipperID = Shippers.ShipperID;
 
 
 #### *3. Aggregation (5 minutes)*
@@ -125,19 +139,24 @@ ON orders.shipperid = shippers.shipperid
   - TotalOrders
 
 - **Answer:**
+-- Select the CustomerName from the Customers table
 SELECT customers.customername,
 
-/* Count the total number of orders*/
-COUNT(orders.orderid) AS TotalOrders
+       -- Count the number of associated orders for each customer
+       -- and assign the count result to the alias "TotalOrders"
+       COUNT(orders.orderid) AS TotalOrders
 
+-- Specify that the data should be retrieved from the Customers table
 FROM customers
 
-/* Joining orders and customers tables*/
+-- Perform an INNER JOIN between the Customers and Orders tables
+-- This will combine rows where the CustomerID matches in both tables
 INNER JOIN orders
 ON customers.customerid = orders.customerid
 
-/* Group by each customer*/
-GROUP BY customers.customername
+-- Group the results by CustomerName to ensure that the count of orders
+-- is calculated for each customer
+GROUP BY customers.customername;
 
 
 #### **4. Filtering and Grouping (5 minutes)**
@@ -146,14 +165,68 @@ GROUP BY customers.customername
   - `OrderID`
   - `TotalQuantity`
 
+- **Answer:**
+-- Select the OrderID from the OrderDetails what contains Quantity column
+SELECT OrderID, 
+       -- Calculate the total quantity of items for each order and alias it as TotalQuantity
+       SUM(Quantity) AS TotalQuantity
+
+-- Specify that the data should be selected from the OrderDetails table
+FROM OrderDetails
+
+-- Group the results by OrderID so that the SUM is calculated for each unique order
+GROUP BY OrderID
+
+-- Filter the grouped results to include only those orders where the total quantity is greater than 1
+HAVING SUM(Quantity) > 1;
+
 
 #### *5. Subquery (5 minutes)*
 - *Question:* Retrieve the names of products that have never been ordered.
 - *Expected Output:*
   - ProductName
 
+--#### *5. Subquery (5 minutes)*
+--- *Question:* Retrieve the names of products that have never been ordered.
+--- *Expected Output:*
+--  - ProductName
 
-```
+- **Answer:**
+-- Select the ProductName from the Products table
+SELECT p.ProductName
+
+-- Alias 'p' is assigned to the Products table for easier reference
+FROM Products AS p
+
+-- Check where there does NOT exist a matching entry in the OrderDetails table
+WHERE NOT EXISTS (
+
+-- Select 1 is a common practice, selecting a constant value as a placeholder
+SELECT 1
+
+-- Reference the OrderDetails table with alias 'od'
+FROM OrderDetails AS od
+
+-- Condition to find matching ProductID in OrderDetails for the current ProductID in Products
+ WHERE od.ProductID = p.ProductID
+);
+
+/*-- WITH LEFT JOIN LESS EFICIENT
+-- Select the ProductName from the Products table
+SELECT p.ProductName                
+
+-- Alias 'p' is assigned to the Products table for easier reference
+FROM Products p                     
+
+-- Perform a LEFT JOIN with the OrderDetails table, alias 'od'
+LEFT JOIN OrderDetails od           
+
+-- Join condition: matching ProductID in both Products and OrderDetails tables
+ON p.ProductID = od.ProductID       
+
+-- Filter condition: keep only rows where there is no matching ProductID in OrderDetails
+WHERE od.ProductID IS NULL;         */
+
 
 #### *6. Update Operation (5 minutes)*
 - *Question:* Increase the price of all products by 10% where the current price is less than $100.
