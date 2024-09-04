@@ -106,6 +106,7 @@ FROM Customers
 WHERE Country = 'USA';
 
 
+
 #### **2. Joining Tables (5 minutes)**
 - **Question:** Retrieve a list of all orders along with the customer name and shipper name.
 - **Expected Output:**
@@ -130,6 +131,7 @@ ON Orders.CustomerID = Customers.CustomerID
 -- This will combine rows from both tables where the ShipperID matches in both tables
 INNER JOIN Shippers							
 ON Orders.ShipperID = Shippers.ShipperID;
+
 
 
 #### *3. Aggregation (5 minutes)*
@@ -159,6 +161,7 @@ ON customers.customerid = orders.customerid
 GROUP BY customers.customername;
 
 
+
 #### **4. Filtering and Grouping (5 minutes)**
 - **Question:** Find the total quantity of products ordered in each order where the total quantity is greater than 1.
 - **Expected Output:**
@@ -185,6 +188,8 @@ HAVING SUM(Quantity) > 1;
 - *Question:* Retrieve the names of products that have never been ordered.
 - *Expected Output:*
   - ProductName
+
+
 
 --#### *5. Subquery (5 minutes)*
 --- *Question:* Retrieve the names of products that have never been ordered.
@@ -228,12 +233,31 @@ ON p.ProductID = od.ProductID
 WHERE od.ProductID IS NULL;         */
 
 
-#### *6. Update Operation (5 minutes)*
-- *Question:* Increase the price of all products by 10% where the current price is less than $100.
-- *Expected Outcome:*
-  - The prices of applicable products should be updated.
 
+/*#### *6. Update Operation (5 minutes)*
+  - *Question:* Increase the price of all products by 10% where the current price is less than $100.
+  - *Expected Outcome:*
+  - The prices of applicable products should be updated. */
 
+  /* -- This query helps you confirm that you are updating the correct rows. 
+  SELECT *
+  FROM Products
+  WHERE Price < 100 */
+
+- **Answer:**
+/*-- Update the price of products in the Products table
+UPDATE Products 
+
+-- Set the new price by increasing the current price by 10%
+SET Price = Price * 1.10 
+
+-- Only apply the update to products where the current price is less than $100
+WHERE Price < 100; */
+
+/* -- After Query
+SELECT ProductName, Price
+FROM Products
+WHERE Price < 100 */
 
 ### Wrap-Up
 
