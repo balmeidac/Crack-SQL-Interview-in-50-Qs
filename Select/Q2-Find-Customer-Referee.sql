@@ -1,4 +1,4 @@
--- QUESTION 2 584. Find Customer Referee
+-- QUESTION 2 Find Customer Referee
 -- Table: Customer
 
 -- +-------------+---------+
@@ -11,7 +11,7 @@
 -- In SQL, id is the primary key column for this table.
 -- Each row of this table indicates the id of a customer, their name, and the id of the customer who referred them.
  
-
+-- QUESTION 2
 -- Find the names of the customer that are not referred by the customer with id = 2.
 
 -- Return the result table in any order.
@@ -43,10 +43,15 @@
 -- | Bill |
 -- | Zack |
 -- +------+
-/* Write your T-SQL query statement below */
+
+-- ANSWER 2
+-- Find the names of the customer that are not referred by the customer with id = 2.
+-- Return the result table in any order.
+
+-- Select the 'name' column from the 'Customer' table
 SELECT name
+-- Specify the 'Customer' table to retrieve data from
 FROM Customer
-WHERE id NOT IN (
-    SELECT id
-    FROM Customer
-    WHERE referee_id = 2)
+-- Filter out customers who are not referred by the customer with id = 2
+-- OR customers who do not have a referee (referee_id is NULL)
+WHERE referee_id != 2 OR referee_id IS NULL;
