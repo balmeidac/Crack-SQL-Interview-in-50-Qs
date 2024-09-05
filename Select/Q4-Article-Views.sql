@@ -15,8 +15,8 @@ Each row of this table indicates that some viewer viewed an article (written by 
 Note that equal author_id and viewer_id indicate the same person.
  
 
+QUESTION 4
 Write a solution to find all the authors that viewed at least one of their own articles.
-
 Return the result table sorted by id in ascending order.
 
 The result format is in the following example.
@@ -47,16 +47,13 @@ Output:
 +------+ */
 
 
--- ANSWER
+-- ANSWER 4
 -- Select distinct author_id and rename it as id for the output
 SELECT DISTINCT author_id AS id
-
 -- The data is selected from the Views table
 FROM Views
-
 -- Filter the rows where the author_id is equal to the viewer_id
 WHERE author_id = viewer_id
-
 -- Sort the output by id in ascending order
 ORDER BY id ASC;
 
