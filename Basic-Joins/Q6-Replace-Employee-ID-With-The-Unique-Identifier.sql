@@ -71,3 +71,15 @@ The unique ID of Jonathan is 1. */
 /* ANSWER 5
 Write a solution to show the unique ID of each user, If a user does not have a unique ID replace just show null.
 Return the result table in any order. */
+
+-- Select the 'unique_id' from the 'EmployeeUNI' table and 'name' from the 'Employees' table
+SELECT 
+    eu.unique_id, e.name
+-- Specify the 'Employees' table with an alias 'e' to retrieve employee data
+FROM 
+    Employees AS e
+-- Perform a LEFT JOIN between 'Employees' and 'EmployeeUNI' tables, using aliases
+LEFT JOIN 
+    EmployeeUNI AS eu
+-- Join the two tables on the 'id' column that matches between 'Employees' and 'EmployeeUNI'
+ON  e.id = eu.id;
