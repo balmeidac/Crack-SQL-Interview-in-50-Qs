@@ -19,8 +19,9 @@ A country is big if:
 
 it has an area of at least three million (i.e., 3000000 km2), or
 it has a population of at least twenty-five million (i.e., 25000000).
-Write a solution to find the name, population, and area of the big countries.
 
+QUESTION 3
+Write a solution to find the name, population, and area of the big countries.
 Return the result table in any order.
 
 The result format is in the following example.
@@ -46,8 +47,14 @@ Output:
 | Algeria     | 37100000   | 2381741 |
 +-------------+------------+---------+ */
 
+-- ANSWER 3
 /* Write your T-SQL query statement below */
+-- Select the 'name', 'population', and 'area' columns from the 'World' table
 SELECT name, population, area
-FROM World 
+-- Specify the 'World' table to retrieve data from
+FROM World
+-- Filter the countries where the area is greater than 3,000,000 square kilometers
 WHERE area > 3000000
+-- Or where the population is greater than 25,000,000 people
 OR population > 25000000;
+
