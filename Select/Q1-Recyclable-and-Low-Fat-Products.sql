@@ -46,12 +46,9 @@
 
 -- Select the product_id of products that meet the conditions
 SELECT product_id
-
 -- The data is selected from the products table
 FROM products
-
 -- Filter the rows where the low_fats column has a value of 'Y' (Yes, low fats)
 WHERE low_fats = 'Y'
-
 -- Additionally, filter the rows where the recyclable column also has a value of 'Y' (Yes, recyclable)
 AND recyclable = 'Y';
